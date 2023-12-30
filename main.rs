@@ -1,19 +1,20 @@
-use std::io;
+fn bwt(text: &str) -> (String, usize) {
+    let mut rotations: Vec<String> = Vec::new();
 
-fn main() {
-    // Prompt the user for input
-    println!("Enter your name:");
+    // Generate all rotations of the input string
+    for i in 0..text.len() {
+        let rotation = format!("{}{}", &text[i..], &text[..i]);
+        rotations.push(rotation);
+    }
 
-    // Create a mutable String to store the user's input
-    let mut input = String::new();
+    // Sort the rotations lexicographically
+    rotations.sort();
 
-    // Read the user's input from the console
-    io::stdin().read_line(&mut input)
-        .expect("Failed to read line");
+    // Extract the last characters of each rotation to form the BWT result
+    let bwt: String = rotations.iter().map(|s| s.chars().last().unwrap()).collect();
 
-    // Trim any leading or trailing whitespace from the input
-    let trimmed_input = input.trim();
+    // Find the index of the original string in the sorted rotations
+    let original_index = rotations.iter().position(|s| *s == text).unwrap();
 
-    // Print a personalized greeting
-    println!("Hello, {}! Welcome to the world of Rust!", trimmed_input);
+    (bwt, original_index)
 }
