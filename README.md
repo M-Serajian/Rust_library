@@ -1,0 +1,1 @@
+This repository is a getting start with rust, while using the c++ libraries such as sdsl lite. 
