@@ -20,6 +20,19 @@ fn bwt(text: &str) -> (String, usize) {
 }
 
 
+fn main() {
+    let original_text = "banana";
+    
+    // Perform Bidirectional Burrows-Wheeler Transform
+    let (bwt_result, original_index) = bwt(original_text);
+    println!("Original Text: {}", original_text);
+    println!("BWT Result: {}", bwt_result);
+
+    // Perform reverse transformation
+    let reversed_text = bbwt(&bwt_result, original_index);
+    println!("Reversed Text: {}", reversed_text);
+}
+
 fn bbwt(bwt: &str, original_index: usize) -> String {
     let mut table: Vec<Vec<char>> = Vec::new();
 
