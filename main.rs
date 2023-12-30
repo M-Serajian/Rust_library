@@ -18,3 +18,35 @@ fn bwt(text: &str) -> (String, usize) {
 
     (bwt, original_index)
 }
+
+
+fn bbwt(bwt: &str, original_index: usize) -> String {
+    let mut table: Vec<Vec<char>> = Vec::new();
+
+    // Initialize the table with empty characters
+    for _ in 0..bwt.len() {
+        table.push(vec![' '; bwt.len()]);
+    }
+
+    // Fill in the table column by column
+    for col in 0..bwt.len() {
+        let mut column: Vec<(char, usize)> = bwt.chars().enumerate().collect();
+        column.sort_by_key(|&(_, idx)| idx);
+
+        for row in 0..bwt.len() {
+            table[row][col] = column[row].0;
+        }
+    }
+
+    // Reconstruct the original string using the table and the original index
+    let mut result = String::new();
+    let mut current_index = original_index;
+
+    for _ in 0..bwt.len() {
+        let c = table[current_index][0];
+        result.push(c);
+        current_index = table[current_index].iter().position(|&x| x == c).unwrap();
+    }
+
+    result
+}
