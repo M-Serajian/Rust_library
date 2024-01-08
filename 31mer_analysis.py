@@ -14,6 +14,21 @@ import pandas as pd
 import numpy as np
 
 
+def concatenate_dataframes_with_padding(dfs):
+    """
+    Concatenate a list of dataframes vertically, ensuring that all dataframes have the same number of rows.
+    If a dataframe has fewer rows, it is padded with NaNs.
+
+    :param dfs: List of pandas DataFrames to concatenate
+    :return: Concatenated DataFrame
+    """
+    # Determine the maximum number of rows in any of the dataframes
+    max_rows = max(df.shape[0] for df in dfs)
+
+    # Function to pad dataframe with NaNs to match the max number of rows
+    
+    return concatenated_df
+
 # defining colors for print to make debugs and .log files readable
 green_color = "\033[32m"
 blue_color = "\033[34m"
