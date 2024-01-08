@@ -26,7 +26,20 @@ def concatenate_dataframes_with_padding(dfs):
     max_rows = max(df.shape[0] for df in dfs)
 
     # Function to pad dataframe with NaNs to match the max number of rows
-    
+    def pad_df(df):
+        rows_to_add = max_rows - df.shape[0]
+        if rows_to_add > 0:
+            # Create a DataFrame of NaNs with the required number of rows and columns
+            padding_df = pd.DataFrame(np.nan, index=range(rows_to_add), columns=df.columns)
+            # Append the padding DataFrame to the original DataFrame
+            return df.append(padding_df, ignore_index=True)
+        else:
+            return df
+
+    # Pad each dataframe and concatenate them
+    padded_dfs = [pad_df(df) for df in dfs]
+    concatenated_df = pd.concat(padded_dfs, axis=1)
+
     return concatenated_df
 
 # defining colors for print to make debugs and .log files readable
